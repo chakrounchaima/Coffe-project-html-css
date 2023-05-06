@@ -1,0 +1,111 @@
+Routeur A
+en
+conf t
+hostname A
+int eth0/0/0
+ip add 192.168.40.1 255.255.255.0
+no shut
+exit
+int fa0/0
+ip add 10.10.0.1 255.255.0.0
+no shut
+exit
+int fa0/1
+ip add 10.20.0.1 255.255.0.0
+no shut
+exit
+exit
+copy run start
+------------------------------
+Routeur B
+en
+conf t
+hostname B
+int eth0/0/0
+ip add 192.168.10.1 255.255.255.0
+no shut
+exit
+int fa0/0
+ip add 10.40.0.1 255.255.0.0
+no shut
+exit
+int fa0/1
+ip add 10.20.0.2 255.255.0.0
+no shut
+exit
+exit
+copy run start
+-------------------------------------
+Routeur c
+en
+conf t
+hostname C
+int eth0/0/0
+ip add 192.168.20.1 255.255.255.0
+no shut
+exit
+int fa0/0
+ip add 10.10.0.2 255.255.0.0
+no shut
+exit
+int fa0/1
+ip add 10.30.0.1 255.255.0.0
+no shut
+exit
+exit
+copy run start
+-------------------------------------
+Routeur D
+en
+conf t
+hostname D
+int eth0/0/0
+ip add 192.168.30.1 255.255.255.0
+no shut
+exit
+int fa0/0
+ip add 10.40.0.2 255.255.0.0
+no shut
+exit
+int fa0/1
+ip add 10.30.0.2 255.255.0.0
+no shut
+exit
+exit
+copy run start
+______________________________________
+-Routage routeur A
+en
+conf t
+ip route 192.168.20.0 255.255.255.0 10.10.0.2
+ip route 192.168.30.0 255.255.255.0 10.10.0.2
+ip route 192.168.10.0 255.255.255.0 10.20.0.2
+exit
+copy run start
+______________________________________
+-Routage routeur B
+en
+conf t
+ip route 192.168.40.0 255.255.255.0 10.20.0.1
+ip route 192.168.30.0 255.255.255.0 10.40.0.2
+ip route 192.168.20.0 255.255.255.0 10.40.0.2
+exit
+copy run start
+______________________________________
+-Routage routeur C
+en
+conf t
+ip route 192.168.40.0 255.255.255.0 10.10.0.1
+ip route 192.168.30.0 255.255.255.0 10.30.0.2
+ip route 192.168.10.0 255.255.255.0 10.30.0.2
+exit
+copy run start
+______________________________________
+-Routage routeur D
+en
+conf t
+ip route 192.168.20.0 255.255.255.0 10.30.0.1
+ip route 192.168.10.0 255.255.255.0 10.40.0.1
+ip route 192.168.40.0 255.255.255.0 10.40.0.1
+exit
+copy run start
